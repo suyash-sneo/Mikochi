@@ -71,15 +71,18 @@ const Directory = () => {
   }, [refresh]);
 
   useEffect(() => {
+    setRefresh(refresh + 1);
     if (searchQuery != "") {
-      setRefresh(refresh + 1);
       setCompare("none");
+    } else if (compare === "none") {
+      setCompare("name_asc");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   useEffect(() => {
-    if (!location.path.endsWith("/")) {
-      location.route(`${location.path}/`);
+    if (!location.url.endsWith("/")) {
+      location.route(`${location.path}/`, true);
     }
     if (location.path == "/") {
       document.title = `Mikochi`;
@@ -93,6 +96,7 @@ const Directory = () => {
     }
 
     setRefresh(refresh + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.path]);
 
   return (
